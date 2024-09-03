@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Task(models.Model):
-     PRIORITY_CHOICES = [
+    PRIORITY_CHOICES = [
         ('L', 'Low'),
         ('M', 'Medium'),
         ('H', 'High'),
@@ -18,6 +18,7 @@ class Task(models.Model):
     ]
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES, default='M')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
     due_date = models.DateField(null=True, blank=True)
