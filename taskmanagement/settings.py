@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'tasks',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,4 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'  # Where to redirect after login
 LOGOUT_REDIRECT_URL = 'login'  # Where to redirect after logout
 LOGIN_URL = 'login'  # URL for @login_required decorator
+CRISPY_TEMPLATE_PACK = 'bootstrap5'  #
