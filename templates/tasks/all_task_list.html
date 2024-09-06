@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Task List</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.assignee.username }}</td>  <!-- Display the username of the assignee -->
+            <td>{{ task.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

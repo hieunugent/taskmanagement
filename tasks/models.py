@@ -24,6 +24,7 @@ class Task(models.Model):
     due_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add =True)
     update_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE,related_name='creator')
+    assignee = models.ForeignKey(User,on_delete= models.CASCADE,related_name='assignee', null=True, blank=True)
 def __str__(self):
     return self.title

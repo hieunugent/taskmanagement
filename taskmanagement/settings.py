@@ -58,8 +58,7 @@ ROOT_URLCONF = 'taskmanagement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./users/templates/users',
-            './tasks/templates/tasks'],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +125,7 @@ STATIC_URL = '/static/'
 
 # login user setting
 
-LOGIN_REDIRECT_URL = 'home'  # Where to redirect after login
+LOGIN_REDIRECT_URL = 'task-list'  # Where to redirect after login
 LOGOUT_REDIRECT_URL = 'login'  # Where to redirect after logout
 LOGIN_URL = 'login'  # URL for @login_required decorator
 CRISPY_TEMPLATE_PACK = 'bootstrap5'  #

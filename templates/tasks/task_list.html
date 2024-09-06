@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="container mt-4">
-    <h2>Your Tasks</h2>
+    <h2 style="text-transform: capitalize;"> {{user}} Tasks</h2>
     <a href="{% url 'task-create' %}" class="btn btn-primary mb-3">Create New Task</a>
     <ul class="list-group">
       {% for task in tasks %}
@@ -16,3 +16,4 @@
     </ul>
   </div>
 {% endblock %}
+
