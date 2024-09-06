@@ -7,4 +7,5 @@ urlpatterns = [
     path('create/', views.task_create, name='task-create'),  # Create a new task
     path('<int:pk>/update/', views.task_update, name='task-update'),  # Update an existing task
     path('<int:pk>/delete/', views.task_delete, name='task-delete'),  # Delete a task
+    path('supervisor',views.task_list_view, name='supervisor')
 ]

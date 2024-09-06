@@ -50,3 +50,18 @@ def task_delete(request, pk):
         messages.success(request, 'Task deleted successfully!')
         return redirect('task-list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+# views.py
+
+@login_required
+def task_list_view(request):
+    # If the user is a superuser, display all tasks
+    if request.user.is_superuser:
+        tasks = Task.objects.all()
+    else:
+        # Otherwise, display only the tasks assigned to the current user
+        tasks = Task.objects.filter(assignee=request.user)
+
+    context = {
+        'tasks': tasks,
+    }
+    return render(request, 'tasks/all_task_list.html', context)

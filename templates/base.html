@@ -34,6 +34,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
+                    {% if user.is_superuser%}
+                        {% csrf_token%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'supervisor' %}">supervisor</a>
+                        </li>
+                    {% endif%}
+                    
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Login</a>
