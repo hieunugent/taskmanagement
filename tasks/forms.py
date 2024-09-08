@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'completed', 'assignee']
+        fields = ['title', 'description', 'status', 'assignee']
     def __init__(self,*args, **kwargs):
         user= kwargs.pop('user')
         super(TaskForm, self).__init__(*args, **kwargs)
