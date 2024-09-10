@@ -29,7 +29,7 @@ staticfiles/
 
 # Local settings
 settings_local.py
-*/settings.py
+**/settings.py
 # Jupyter Notebook files
 *.ipynb_checkpoints
 
