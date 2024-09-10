@@ -65,3 +65,4 @@ def task_list_view(request):
         'tasks': tasks,
     }
     return render(request, 'tasks/all_task_list.html', context)
+

@@ -6,7 +6,10 @@ from django.contrib.auth.models import User
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'assignee']
+        fields = ['title', 'description', 'status', 'assignee', "due_date"]
+        widgets = {
+            'due_date': forms.DateInput(attrs={'type': 'date'})  # HTML5 date input
+        }
     def __init__(self,*args, **kwargs):
         user= kwargs.pop('user')
         super(TaskForm, self).__init__(*args, **kwargs)
