@@ -129,3 +129,9 @@ LOGIN_REDIRECT_URL = 'task-list'  # Where to redirect after login
 LOGOUT_REDIRECT_URL = 'login'  # Where to redirect after logout
 LOGIN_URL = 'login'  # URL for @login_required decorator
 CRISPY_TEMPLATE_PACK = 'bootstrap5'  #
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis broker URL
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # Redis result backend
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
