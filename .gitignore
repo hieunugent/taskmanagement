@@ -82,3 +82,6 @@ staticfiles/
 # Environment variables
 .env
 *.env
+
+celerybeat-schedule
+
