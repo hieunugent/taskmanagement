@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User 
-
+from datetime import datetime, timedelta
+current = datetime.now()
+future_date  = current + timedelta(days=5)
 # Create your models here.
 class Task(models.Model):
     PRIORITY_CHOICES = [
@@ -21,7 +23,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES, default='M')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
-    due_date = models.DateField(null=True, blank=True)
+    due_date = models.DateField(null=True, blank=True, default=future_date)
     created_at = models.DateTimeField(auto_now_add =True)
     update_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE,related_name='creator')

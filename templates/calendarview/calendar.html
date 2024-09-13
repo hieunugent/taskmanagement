@@ -1,0 +1,59 @@
+<!-- templates/calendar.html -->
+
+{% extends "base.html" %}
+{% block content %}
+{% load calendar_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Calendar</title>
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .day {
+            border: 1px solid #ddd;
+            padding: 10px;
+            height: 150px;
+            vertical-align: top;
+        }
+        .day-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .empty-day {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Calendar for {{ current_month }} {{ current_year }} by {{user_name}}</h1>
+    <div class="calendar">
+        <!-- Day headers -->
+        {% for day_name in day_names %}
+            <div class="day-header">{{ day_name }}</div> 
+        {% endfor %}
+        
+        <!-- Calendar weeks -->
+        {% for week in weeks %}
+            {% for day in week %}
+                {% if day %}
+                    <div class="day">
+                        <strong>{{ day.day }}</strong>
+                        <ul>
+                            {% for task in tasks_by_day|get_tasks:day %}
+                                <li>{{ task.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="day empty-day"></div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+</html>
+{%endblock%}
