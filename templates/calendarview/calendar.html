@@ -44,7 +44,13 @@
                         <strong>{{ day.day }}</strong>
                         <ul>
                             {% for task in tasks_by_day|get_tasks:day %}
-                                <li>{{ task.title }}</li>
+                            {%if task.status == 'C' %}
+                            <li > <a href="{% url 'task-update' task.pk %}"  class="text-success">{{ task.title|custom_truncatechars:10}}</a></li>
+                            {%elif task.status == 'O' %}
+                            <li  ><a href="{% url 'task-update' task.pk %}" class="text-info">{{ task.title|custom_truncatechars:10}}</a></li>
+                            {% else%}
+                            <li ><a href="{% url 'task-update' task.pk %}" class="text-warning">{{ task.title|custom_truncatechars:10}}</a></li>
+                            {% endif%}                                
                             {% endfor %}
                         </ul>
                     </div>

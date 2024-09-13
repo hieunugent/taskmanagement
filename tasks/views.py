@@ -34,9 +34,11 @@ def task_create(request):
 @login_required
 def task_update(request, pk):
     """View to update an existing task."""
-    task = get_object_or_404(Task, pk=pk, user=request.user)
+    task = get_object_or_404(Task, pk=pk)
+    if task.user != request.user and task.assignee != request.user:
+        return HttpResponseForbidden("You are not allowed to edit this task.")
     if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task,user=request.user )
+        form = TaskForm(request.POST, instance=task, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Task updated successfully!')
@@ -75,7 +77,6 @@ def calendar_view(request):
     today = timezone.now().date()
     current_year = today.year
     current_month = today.month
-
     # Get the first day of the month and number of days in the month
     first_day_of_month, days_in_month = monthrange(current_year, current_month)
 
