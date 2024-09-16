@@ -8,8 +8,7 @@ from calendar import monthrange
 from .models import Task
 from .forms import TaskForm
 from datetime import date, timedelta
-
-
+from django.db.models import Q
 # Create your views here.
 @login_required
 def task_list(request):
@@ -72,6 +71,24 @@ def task_list_view(request):
         'tasks': tasks,
     }
     return render(request, 'tasks/all_task_list.html', context)
+
+@login_required
+def task_list_search(request):
+    query = request.GET.get('q')  # Get the search query from the GET request
+    if query:
+          tasks = Task.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query) | Q(assignee__username__icontains=query)
+        ) # Search by task name (case insensitive)
+    else:
+        tasks = Task.objects.all() 
+        print(tasks) # If no search query, return all tasks
+    context={
+        'tasks': tasks,
+        'query': query
+    }
+    return render(request, 'tasks/task_list_search.html', context)
+
+
 @login_required
 def calendar_view(request):
     today = timezone.now().date()
