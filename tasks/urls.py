@@ -3,8 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.task_list, name='task-list'),  # List all tasks
-    path('tasks', views.task_list_search, name='task-list-search'),
+    path('lists/', views.task_list, name='task-list'),  # List all tasks
+    path('search/', views.task_list_search, name='task-list-search'),
     path('create/', views.task_create, name='task-create'),  # Create a new task
     path('<int:pk>/update/', views.task_update, name='task-update'),  # Update an existing task
     path('<int:pk>/delete/', views.task_delete, name='task-delete'),  # Delete a task
