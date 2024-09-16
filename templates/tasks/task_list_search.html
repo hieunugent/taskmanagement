@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="GET" action="{% url 'task-list-search' %}">
-  <input type="text" name="q" placeholder="Search tasks...">
-  <button type="submit">Search</button>
-</form>
+{% include "search_base.html"%}
   <div class="container mt-4 col-md-16">
     <h2 style="text-transform: capitalize;"> {{user}} Tasks</h2>
     <a href="{% url 'task-create' %}" class="btn btn-primary mb-3">Create New Task</a>
