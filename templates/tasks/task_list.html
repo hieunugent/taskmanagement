@@ -17,7 +17,7 @@
       </thead>
       <tbody>
           {% for task in tasks %} 
-          <div href="{% url 'task-update' task.pk %}">
+          <div >
             <tr >
               <td> {{ task.title }}</td>
               <td> {{ task.description }}</td>
