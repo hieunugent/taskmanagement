@@ -1,0 +1,61 @@
+/* Style for searching Box */
+.search-form {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-right: 0;
+  }
+  .search-form-instance {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-left: 0;
+  }
+  
+  /* Styling for the input field */
+  .search-input, .search-input-instance {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: inset 0 1px 2px rgba(14, 4, 200, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  /* Input field focus effect */
+  .search-input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+
+  /* Ordering options */
+  .order-form {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-right: 0;
+  }
+ 
+  .select-form {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: inset 0 1px 2px rgba(14, 4, 200, 0.075);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 2px;
+  }

@@ -9,11 +9,29 @@ from .models import Task
 from .forms import TaskForm
 from datetime import date, timedelta
 from django.db.models import Q
+
+from django.http import JsonResponse
 # Create your views here.
 @login_required
 def task_list(request):
     tasks = Task.objects.filter(user=request.user)
+    order_by = request.GET.get('order_by')
+
+    # Apply ordering based on user selection
+    if order_by == 'due_date_asc':
+        tasks = tasks.order_by('due_date')
+    elif order_by == 'due_date_desc':
+        tasks = tasks.order_by('-due_date')
+    elif order_by == 'title_asc':
+        tasks = tasks.order_by('title')
+    elif order_by == 'title_desc':
+        tasks = tasks.order_by('-title')
+
+
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
+@login_required
+def order_task_list(request):
+    pass
 
 @login_required
 def task_create(request):
@@ -73,23 +91,6 @@ def task_list_view(request):
     return render(request, 'tasks/all_task_list.html', context)
 
 @login_required
-def task_list_search(request):
-    query = request.GET.get('q')  # Get the search query from the GET request
-    if query:
-          tasks = Task.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query) | Q(assignee__username__icontains=query)
-        ) # Search by task name (case insensitive)
-    else:
-        tasks = Task.objects.all() 
-        print(tasks) # If no search query, return all tasks
-    context={
-        'tasks': tasks,
-        'query': query
-    }
-    return render(request, 'tasks/task_list_search.html', context)
-
-
-@login_required
 def calendar_view(request):
     today = timezone.now().date()
     current_year = today.year
@@ -137,3 +138,36 @@ def calendar_view(request):
         'day_names': day_names, 
     }
     return render(request, 'calendarview/calendar.html', context)
+@login_required
+def task_list_search(request):
+    query = request.GET.get('q')  # Get the search query from the GET request
+    if query:
+          tasks = Task.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query) | Q(assignee__username__icontains=query)
+        ).order_by('due_date') # Search by task name (case insensitive)
+    else:
+        tasks = Task.objects.all() 
+        print(tasks) # If no search query, return all tasks
+    context={
+        'tasks': tasks,
+        'query': query
+    }
+    return render(request, 'tasks/task_list_search.html', context)
+
+@login_required
+def task_list_instance_search(request):
+    if request.is_ajax():
+        query = request.GET.get('q', '')
+        tasks = Task.objects.filter(title__icontains=query)
+        results = []
+
+        # Prepare the results in a format that JavaScript can understand (usually a list of dicts)
+        for task in tasks:
+            results.append({
+                'title': task.title,
+                'description': task.description,
+            })
+        return JsonResponse({'results': results})
+    task_list_search(request)
+    # If the request is not AJAX, render the search page normally
+   

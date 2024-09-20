@@ -1,34 +1,47 @@
-  <style>
-    .search-form {
-        display: flex;
-        align-items: center;
-        max-width: 400px;
-        margin: 0 auto;
-        margin-right: 0;
-      }
-      
-      /* Styling for the input field */
-      .search-input {
-        flex: 1;
-        padding: 10px 15px;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        box-shadow: inset 0 1px 2px rgba(14, 4, 200, 0.075);
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      }
-      
-      /* Input field focus effect */
-      .search-input:focus {
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-      }
-  </style>
-<form class="search-form" method="GET" action="{% url 'task-list-search' %}">
-    <input class="search-input" type="text" name="q" placeholder="Search tasks...">
+
+<body>
+  <form class="search-form" method="GET" action="{% url 'task-list-search' %}">
+    <input id="search-input" class="search-input" type="text" name="q" placeholder="Search tasks...">
+ </form>
+ <form  class="order-form input-group" method="GET">
+  <select class="custom-select" name="order_by" id="order_by" onchange="this.form.submit()">
+      <option value="">Select Order By</option>
+      <option value="due_date_asc" {% if request.GET.order_by == "due_date_asc" %}selected{% endif %}>Due Date (Earliest first)</option>
+      <option value="due_date_desc" {% if request.GET.order_by == "due_date_desc" %}selected{% endif %}>Due Date (Latest first)</option>
+      <option value="title_asc" {% if request.GET.order_by == "title_asc" %}selected{% endif %}>Title (A-Z)</option>
+      <option value="title_desc" {% if request.GET.order_by == "title_desc" %}selected{% endif %}>Title (Z-A)</option>
+  </select>
 </form>
+  <!-- <form class="search-form-instance" >
+    <input id="search-input-instance" class="search-input-instance" type="text" name="q" placeholder="Instance Search Tasks...">
+    <ul id="results-list"></ul>
+    <script>
+        // Listen for input in the search box
+        document.getElementById('search-input-instance').addEventListener('keyup', function() {
+          
+          var query = this.value;
+
+
+          if (query.length > 0) {
+              fetch(`/tasks/search/?q=${query}`)
+              .then(response => response.json())
+              .then(data => {
+                  const resultsList = document.getElementById('results-list');
+                  resultsList.innerHTML = '';
+  
+                  if (data.results.length > 0) {
+                      data.results.forEach(task => {
+                          resultsList.innerHTML += `<li>${task.title}: ${task.description}</li>`;
+                      });
+                  } else {
+                      resultsList.innerHTML = '<li>No tasks found.</li>';
+                  }
+              })
+              .catch(error => console.log('Error:', error));
+          } else {
+              document.getElementById('results-list').innerHTML = '';
+          }
+      });
+    </script>
+  </form> -->
+</body>
