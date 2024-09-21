@@ -12,36 +12,11 @@
       <option value="title_desc" {% if request.GET.order_by == "title_desc" %}selected{% endif %}>Title (Z-A)</option>
   </select>
 </form>
-  <!-- <form class="search-form-instance" >
-    <input id="search-input-instance" class="search-input-instance" type="text" name="q" placeholder="Instance Search Tasks...">
-    <ul id="results-list"></ul>
-    <script>
-        // Listen for input in the search box
-        document.getElementById('search-input-instance').addEventListener('keyup', function() {
-          
-          var query = this.value;
-
-
-          if (query.length > 0) {
-              fetch(`/tasks/search/?q=${query}`)
-              .then(response => response.json())
-              .then(data => {
-                  const resultsList = document.getElementById('results-list');
-                  resultsList.innerHTML = '';
-  
-                  if (data.results.length > 0) {
-                      data.results.forEach(task => {
-                          resultsList.innerHTML += `<li>${task.title}: ${task.description}</li>`;
-                      });
-                  } else {
-                      resultsList.innerHTML = '<li>No tasks found.</li>';
-                  }
-              })
-              .catch(error => console.log('Error:', error));
-          } else {
-              document.getElementById('results-list').innerHTML = '';
-          }
-      });
-    </script>
-  </form> -->
+<form  class="group-form input-group" method="GET">   
+  <select class="custom-select" name="group_by" id="group_by" onchange="this.form.submit()">
+      <option value="">Group By </option>
+      <option value="status" {% if request.GET.group_by == "status" %}selected{% endif %}>status of task</option>
+      <option value="assignee" {% if request.GET.group_by == "assignee" %}selected{% endif %}>by Assignee</option>
+  </select>
+</form>
 </body>

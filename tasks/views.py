@@ -9,15 +9,15 @@ from .models import Task
 from .forms import TaskForm
 from datetime import date, timedelta
 from django.db.models import Q
-
 from django.http import JsonResponse
 # Create your views here.
 @login_required
 def task_list(request):
     tasks = Task.objects.filter(user=request.user)
     order_by = request.GET.get('order_by')
-
-    # Apply ordering based on user selection
+    group_by = request.GET.get('group_by')
+    
+  
     if order_by == 'due_date_asc':
         tasks = tasks.order_by('due_date')
     elif order_by == 'due_date_desc':
@@ -26,12 +26,23 @@ def task_list(request):
         tasks = tasks.order_by('title')
     elif order_by == 'title_desc':
         tasks = tasks.order_by('-title')
-
+   
+    if group_by == 'status':
+        tasks = tasks.order_by('status')
+    elif group_by == 'assignee':
+        tasks = tasks.order_by('assignee')
 
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
 @login_required
-def order_task_list(request):
-    pass
+def group_list_status(request):
+    tasks = Task.objects.filter(user=request.user)
+    group_by = request.GET.get('group_by')
+    if group_by == 'status':
+        tasks = tasks.order_by('status')
+    elif group_by == 'assignee':
+        tasks = tasks.order_by('assignee')
+    return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
+
 
 @login_required
 def task_create(request):

@@ -37,7 +37,14 @@
   }
 
   /* Ordering options */
-  .order-form {
+  .order-form  {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-right: 0;
+  }
+  .group-form{
     display: flex;
     align-items: center;
     max-width: 400px;
