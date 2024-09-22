@@ -16,8 +16,6 @@ def task_list(request):
     tasks = Task.objects.filter(user=request.user)
     order_by = request.GET.get('order_by')
     group_by = request.GET.get('group_by')
-    
-  
     if order_by == 'due_date_asc':
         tasks = tasks.order_by('due_date')
     elif order_by == 'due_date_desc':
@@ -102,18 +100,25 @@ def task_list_view(request):
     return render(request, 'tasks/all_task_list.html', context)
 
 @login_required
-def calendar_view(request):
+def calendar_view(request, year=None,month=None):
     today = timezone.now().date()
-    current_year = today.year
-    current_month = today.month
+    if year is None or month is None:
+        year = today.year
+        month = today.month
+    else:
+        year = int(year)
+        month = int(month)
     # Get the first day of the month and number of days in the month
-    first_day_of_month, days_in_month = monthrange(current_year, current_month)
+    first_day_of_month, days_in_month = monthrange(year, month)
 
     # Create a list of days in the current month
-    days = [date(current_year, current_month, day) for day in range(1, days_in_month + 1)]
-
+    days = [date(year, month, day) for day in range(1, days_in_month + 1)]
+    # Get the previous and next months
+    current_date = date(year, month, 1)
+    prev_month = (current_date - timedelta(days=1)).replace(day=1)
+    next_month = (current_date + timedelta(days=32)).replace(day=1)
     # Retrieve all tasks for the current month
-    tasks = Task.objects.filter(due_date__year=current_year, due_date__month=current_month)
+    tasks = Task.objects.filter(due_date__year=year, due_date__month=month)
 
     # Create a dictionary to hold tasks by day
     tasks_by_day = {day: [] for day in days}
@@ -144,9 +149,13 @@ def calendar_view(request):
         'user_name':request.user,
         'weeks': weeks,
         'tasks_by_day': tasks_by_day,
-        'current_month': today.strftime('%B'),
-        'current_year': current_year,
+        'month': today.strftime('%B'),
+        'year': year,
         'day_names': day_names, 
+        'prev_year': prev_month.year,
+        'prev_month': prev_month.month,
+        'next_year': next_month.year,
+        'next_month': next_month.month,
     }
     return render(request, 'calendarview/calendar.html', context)
 @login_required

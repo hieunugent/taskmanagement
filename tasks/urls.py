@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/delete/', views.task_delete, name='task-delete'),  # Delete a task
     path('supervisor',views.task_list_view, name='supervisor'),
     path('mycalendar',views.calendar_view, name='mycalendar'),
+    path('mycalendar/<int:year>/<int:month>/',views.calendar_view, name="mycalendar")
 ]

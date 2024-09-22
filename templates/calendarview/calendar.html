@@ -29,7 +29,12 @@
     </style>
 </head>
 <body>
-    <h1>Task Calendar for {{ current_month }} {{ current_year }} by {{user_name}}</h1>
+    <h1>Task Calendar for {{ month }} {{ year }} by {{user_name}}</h1>
+    <div class="btn-group d-grid d-md-flex gap-2 col-2"> 
+        <a class="btn btn-outline-secondary" href="{% url 'mycalendar' prev_year prev_month %}">Prev</a>
+        <a class="btn btn-outline-secondary" href="{% url 'mycalendar' next_year next_month %}">Next</a>
+       
+    </div>
     <div class="calendar">
         <!-- Day headers -->
         {% for day_name in day_names %}
