@@ -16,7 +16,7 @@ class Task(models.Model):
     STATUS_CHOICES = [
         ('P', 'Pending'),
         ('C', 'Completed'),
-        ('O', 'Ongoing'),
+        ('O', 'In progress'),
     ]
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)

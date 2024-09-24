@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from calendar import monthrange
+import calendar
 from .models import Task
 from .forms import TaskForm
 from datetime import date, timedelta
@@ -24,7 +25,6 @@ def task_list(request):
         tasks = tasks.order_by('title')
     elif order_by == 'title_desc':
         tasks = tasks.order_by('-title')
-   
     if group_by == 'status':
         tasks = tasks.order_by('status')
     elif group_by == 'assignee':
@@ -73,6 +73,17 @@ def task_update(request, pk):
         form = TaskForm(instance=task, user=request.user)
     return render(request, 'tasks/task_form.html', {'form': form})
 
+@login_required
+def task_status_update(request,pk):
+    task = get_object_or_404(Task, pk=pk)
+    if request.method =='POST':
+        new_status = request.POST.get('status')
+        task.status = new_status
+        task.save()
+    
+    return redirect('task-list')
+
+
 
 @login_required
 def task_delete(request, pk):
@@ -100,9 +111,9 @@ def task_list_view(request):
     return render(request, 'tasks/all_task_list.html', context)
 
 @login_required
-def calendar_view(request, year=None,month=None):
+def calendar_view(request, year=None, month=None):
     today = timezone.now().date()
-    if year is None or month is None:
+    if year is None  and month is None:
         year = today.year
         month = today.month
     else:
@@ -149,7 +160,7 @@ def calendar_view(request, year=None,month=None):
         'user_name':request.user,
         'weeks': weeks,
         'tasks_by_day': tasks_by_day,
-        'month': today.strftime('%B'),
+        'month': calendar.month_name[int(month)],
         'year': year,
         'day_names': day_names, 
         'prev_year': prev_month.year,
@@ -158,6 +169,8 @@ def calendar_view(request, year=None,month=None):
         'next_month': next_month.month,
     }
     return render(request, 'calendarview/calendar.html', context)
+
+
 @login_required
 def task_list_search(request):
     query = request.GET.get('q')  # Get the search query from the GET request

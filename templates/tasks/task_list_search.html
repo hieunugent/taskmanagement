@@ -26,13 +26,22 @@
               <td> {{ task.description }}</td>
               <td>{{ task.assignee.username }}</td>  <!-- Display the username of the assignee -->
               <td>
-                  {%if task.status == 'C' %}
-                      <span class="badge badge-success">Completed</span>
-                  {%elif task.status == 'O' %}
-                      <span class="badge badge-info">On Going</span>
-                  {% else%}
-                      <span class="badge badge-warning">Pending</span>
-                  {% endif%}
+                <form method="POST" action="{% url 'task-status-update' task.id %}">
+                  {% csrf_token %}
+                    <select class="" name="status" onchange="this.form.submit()">  
+                    {%if task.status == 'C' %}
+                    <option  value="completed" {% if task.status == 'completed' %}selected{% endif %}><span class="bg-success text-dark ">Completed</span></option>   
+                    {%elif task.status == 'O' %}
+                    <option  value="In progress" {% if task.status == 'In progress' %}selected{% endif %}><span class="bg-info text-dark">In Process</span> </option>
+                    {% elif task.status == 'P'%}
+                    <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}><span class="bg-warning text-dark">Pending</span></option>
+                    {% endif%}
+                      <option class="bg-success text-dark" value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>   
+                      <option class="bg-info text-dark" value="In progress" {% if task.status == 'In progress' %}selected{% endif %}>In Progress</option>
+                      <option class="bg-warning text-dark" value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+                      
+                  </select>
+              </form>
               </td> 
               <td>{{ task.due_date}}</td>
                <td>
@@ -47,4 +56,4 @@
   </table>
   </div>
 {% endblock %}
-
+ 

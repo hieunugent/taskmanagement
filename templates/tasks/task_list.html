@@ -4,8 +4,8 @@
   <div class="container mt-4 col-md-16">
     <h2 style="text-transform: capitalize;"> {{user}} Tasks</h2>
     <a href="{% url 'task-create' %}" class="btn btn-primary mb-3">Create New Task</a>
-    <table class="table table-striped table-hover">
-      <thead class="thead-dark">
+    <table class="table table-striped table-hover ">
+      <thead class="thead-dark ">
           <tr>
               <th scope="col">Title</th>
               <th scope="col">Description</th>
@@ -23,18 +23,37 @@
               <td> {{ task.description }}</td>
               <td>{{ task.assignee.username }}</td>  <!-- Display the username of the assignee -->
               <td>
-                  {%if task.status == 'C' %}
+                  <!-- {%if task.status == 'C' %}
                       <span class="badge badge-success">Completed</span>
                   {%elif task.status == 'O' %}
                       <span class="badge badge-info">On Going</span>
-                  {% else%}
+                  {% elif task.status == 'P' %}
                       <span class="badge badge-warning">Pending</span>
-                  {% endif%}
+                  {% endif%} -->
+                  <form method="POST" action="{% url 'task-status-update' task.id %}">
+                    {% csrf_token %}
+                      <select class="" name="status" onchange="this.form.submit()">  
+                      {%if task.status == 'C' %}
+                      <option  value="completed" {% if task.status == 'completed' %}selected{% endif %}><span class="bg-success text-dark ">Completed</span></option>   
+                      {%elif task.status == 'O' %}
+                      <option  value="In progress" {% if task.status == 'In progress' %}selected{% endif %}><span class="bg-info text-dark">In Process</span> </option>
+                      {% elif task.status == 'P'%}
+                      <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}><span class="bg-warning text-dark">Pending</span></option>
+                      {% endif%}
+                        <option class="bg-success text-dark" value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>   
+                        <option class="bg-info text-dark" value="In progress" {% if task.status == 'In progress' %}selected{% endif %}>In Progress</option>
+                        <option class="bg-warning text-dark" value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+                        
+                    </select>
+                </form>
               </td> 
-              <td>{{task.due_date}}</td>
+              <td class="text-nowrap">{{task.due_date}}</td>
                <td>
-                  <a href="{% url 'task-update' task.pk %}" class="btn btn-sm btn-primary">Edit</a>
-                  <a href="{% url 'task-delete' task.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                <div class="d-flex gap-1">
+                  <a href="{% url 'task-update' task.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <a href="{% url 'task-delete' task.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+                  
               </td>
             </tr>    
           </div>
@@ -42,5 +61,6 @@
       </tbody>
   </table>
   </div>
+
 {% endblock %}
 
