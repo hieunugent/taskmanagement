@@ -10,12 +10,7 @@
       <option value="due_date_desc" {% if request.GET.order_by == "due_date_desc" %}selected{% endif %}>Due Date (Latest first)</option>
       <option value="title_asc" {% if request.GET.order_by == "title_asc" %}selected{% endif %}>Title (A-Z)</option>
       <option value="title_desc" {% if request.GET.order_by == "title_desc" %}selected{% endif %}>Title (Z-A)</option>
-  </select>
-</form>
-<form  class="group-form input-group" method="GET">   
-  <select class="custom-select" name="group_by" id="group_by" onchange="this.form.submit()">
-      <option value="">Group By </option>
-      <option value="status" {% if request.GET.group_by == "status" %}selected{% endif %}>status of task</option>
+      <option value="status" {% if request.GET.group_by == "status" %}selected{% endif %}> by status</option>
       <option value="assignee" {% if request.GET.group_by == "assignee" %}selected{% endif %}>by Assignee</option>
   </select>
 </form>

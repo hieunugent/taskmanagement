@@ -16,19 +16,22 @@ from django.http import JsonResponse
 def task_list(request):
     tasks = Task.objects.filter(user=request.user)
     order_by = request.GET.get('order_by')
-    group_by = request.GET.get('group_by')
-    if order_by == 'due_date_asc':
+   
+    if order_by == 'due_date_asc' or order_by =='due_date':
         tasks = tasks.order_by('due_date')
     elif order_by == 'due_date_desc':
         tasks = tasks.order_by('-due_date')
-    elif order_by == 'title_asc':
+    elif order_by == 'title_asc' or order_by == 'title':
         tasks = tasks.order_by('title')
     elif order_by == 'title_desc':
         tasks = tasks.order_by('-title')
-    if group_by == 'status':
+    elif order_by == 'status' :
         tasks = tasks.order_by('status')
-    elif group_by == 'assignee':
+    elif order_by == 'assignee':
         tasks = tasks.order_by('assignee')
+
+    if not order_by:
+        tasks = tasks.order_by('status')
 
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
 @login_required
@@ -40,6 +43,7 @@ def group_list_status(request):
     elif group_by == 'assignee':
         tasks = tasks.order_by('assignee')
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
+
 
 
 @login_required
