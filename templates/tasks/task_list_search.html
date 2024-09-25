@@ -20,6 +20,7 @@
       </thead>
       <tbody>
           {% for task in tasks %} 
+          
           <div href="{% url 'task-update' task.pk %}">
             <tr >
               <td> {{ task.title }}</td>
@@ -50,7 +51,6 @@
               </td>
             </tr>    
           </div>
-                 
           {% endfor %}
       </tbody>
   </table>

@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mycalendar'%}">My Calendar</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard'%}">Dash Board</a>
+                        </li>
                     {% if user.is_superuser%}
                         {% csrf_token%}
                         <li class="nav-item">

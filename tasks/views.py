@@ -35,14 +35,12 @@ def task_list(request):
 
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
 @login_required
-def group_list_status(request):
+def dash_board_view(request):
     tasks = Task.objects.filter(user=request.user)
-    group_by = request.GET.get('group_by')
-    if group_by == 'status':
-        tasks = tasks.order_by('status')
-    elif group_by == 'assignee':
-        tasks = tasks.order_by('assignee')
-    return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
+    tasks_completed = Task.objects.filter(user=request.user, status='C')
+    tasks_in_process = Task.objects.filter(user=request.user, status='O')
+    tasks_pending = Task.objects.filter(user=request.user, status='P')
+    return render(request,'tasks/dashboard.html', {'user':request.user, 'tasks_completed':tasks_completed, 'tasks_in_process':tasks_in_process, 'tasks_pending':tasks_pending})
 
 
 
