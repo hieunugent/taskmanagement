@@ -1,66 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "search_base.html"%}
-  <div class="container mt-4 col-md-16">
-    <h2 style="text-transform: capitalize;"> {{user}} Tasks</h2>
-    <a href="{% url 'task-create' %}" class="btn btn-primary mb-3">Create New Task</a>
-    <table class="table table-striped table-hover ">
-      <thead class="thead-dark " >
-          <tr>
-            <form method="GET" action="" >
-              <th scope="col">
-                
-                <button   type="submit" name="order_by" value="title_asc" class=" btn btn-dark"> Title </button>
-                           
-              </th>
-              <th scope="col"><button  class="btn btn-dark">  Description</button></th>
-              <th scope="col"><button  class="btn btn-dark" >  Assignee</button></th>
-              <th scope="col"><button  class="btn btn-dark" type="submit"  name="order_by" value="status">Status</button></th>
-              <th scope="col"><button  class="btn btn-dark" type="submit"  name="order_by" value="due_date">Due date</button></th>
-              <th scope="col"><button  class="btn btn-dark" >  Actions</button></th>
-            </form>
-           
-          </tr>
-       </thead>
-       <tbody>
-          {% for task in tasks %} 
-          <div >
-            <tr >
-              <td> {{ task.title }}</td>
-              <td> {{ task.description }}</td>
-              <td>{{ task.assignee.username }}</td>  <!-- Display the username of the assignee -->
-              <td>
-                  <form method="POST" action="{% url 'task-status-update' task.id %}">
-                    {% csrf_token %}
-                      <select class="" name="status" onchange="this.form.submit()">  
-                      {%if task.status == 'C' %}
-                      <option   value="completed" {% if task.status == 'completed' %}selected{% endif %}><span style="color: green;">Completed</span></option>   
-                      {%elif task.status == 'O' %}
-                      <option value="In progress" {% if task.status == 'In progress' %}selected{% endif %}> <span  style="color: blue;">In Process</span> </option>
-                      {% elif task.status == 'P'%}
-                      <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}><span  style="color: red;">Pending</span></option>
-                      {% endif%}
-                        <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>   
-                        <option  value="In progress" {% if task.status == 'In progress' %}selected{% endif %}>In Progress</option>
-                        <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
-                        
-                    </select>
-                </form>
-              </td> 
-              <td class="text-nowrap">{{task.due_date}}</td>
-               <td>
-                <div class="d-flex gap-1">
-                  <a href="{% url 'task-update' task.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                  <a href="{% url 'task-delete' task.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                </div>
-                  
-              </td>
-            </tr>    
-          </div>
-          {% endfor %}
-      </tbody>
-  </table>
-  </div>
-
+{% include "task_table.html" with tasks_template=tasks %}
 {% endblock %}
 

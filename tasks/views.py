@@ -29,7 +29,6 @@ def task_list(request):
         tasks = tasks.order_by('status')
     elif order_by == 'assignee':
         tasks = tasks.order_by('assignee')
-
     if not order_by:
         tasks = tasks.order_by('status')
 
