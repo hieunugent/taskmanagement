@@ -23,8 +23,10 @@
                     <td>
                         {%if task.status == 'C' %}
                             <span class="badge badge-success">Completed</span>
-                        {% else%}
+                        {% elif task.status == 'P' %}
                             <span class="badge badge-warning">Pending</span>
+                        {% elif task.status == 'O' %}
+                            <span class="badge badge-info"> In process</span>
                         {% endif%}
                     </td> 
                     <td>{{ task.due_date}}</td>

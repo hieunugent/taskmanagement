@@ -7,7 +7,7 @@
         <!-- Completed Tasks -->
        {% include "dashboard_template.html" with tasks_template=tasks_completed tasks_name="Tasks Completed" badge_class="badge-success"%}
         <!-- In Process Tasks -->
-       {% include "dashboard_template.html" with tasks_template=task_in_process tasks_name="Tasks In Process"  badge_class="badge-info"%}
+       {% include "dashboard_template.html" with tasks_template=tasks_process tasks_name="Tasks In Process"  badge_class="badge-info"%}
         <!-- Pending Tasks -->
        {% include "dashboard_template.html" with tasks_template=tasks_pending tasks_name="Tasks Pending "  badge_class="badge-warning"%} 
     </div>

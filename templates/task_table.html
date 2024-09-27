@@ -30,19 +30,19 @@
               <td> {{ task.description }}</td>
               <td>{{ task.assignee.username }}</td>  <!-- Display the username of the assignee -->
               <td>
-                  <form method="POST" action="{% url 'task-status-update' task.id %}">
+                  <form method="POST" action="{% url 'task-status-update-list' task.id %}">
                     {% csrf_token %}
                       <select class="" name="status" onchange="this.form.submit()">  
-                      {%if task.status == 'C' %}
+                      <!-- {%if task.status == 'C' %}
                       <option   value="completed" {% if task.status == 'completed' %}selected{% endif %}><span style="color: green;">Completed</span></option>   
                       {%elif task.status == 'O' %}
-                      <option value="In progress" {% if task.status == 'In progress' %}selected{% endif %}> <span  style="color: blue;">In Process</span> </option>
+                      <option value="progress" {% if task.status == 'progress' %}selected{% endif %}> <span  style="color: blue;">In Process</span> </option>
                       {% elif task.status == 'P'%}
                       <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}><span  style="color: red;">Pending</span></option>
-                      {% endif%}
-                        <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>   
-                        <option  value="In progress" {% if task.status == 'In progress' %}selected{% endif %}>In Progress</option>
-                        <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+                      {% endif%} -->
+                        <option value="C" {% if task.status == 'C' %}selected{% endif %}>Completed</option>   
+                        <option  value="O" {% if task.status == 'O' %}selected{% endif %}>In Progress</option>
+                        <option  value="P" {% if task.status == 'P' %}selected{% endif %}>Pending</option>
                         
                     </select>
                 </form>

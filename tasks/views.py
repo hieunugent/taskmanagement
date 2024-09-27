@@ -16,8 +16,7 @@ from django.http import JsonResponse
 def task_list(request):
     tasks = Task.objects.filter(user=request.user)
     order_by = request.GET.get('order_by')
-   
-    if order_by == 'due_date_asc' or order_by =='due_date':
+    if   order_by == 'due_date_asc' or order_by =='due_date':
         tasks = tasks.order_by('due_date')
     elif order_by == 'due_date_desc':
         tasks = tasks.order_by('-due_date')
@@ -31,15 +30,14 @@ def task_list(request):
         tasks = tasks.order_by('assignee')
     if not order_by:
         tasks = tasks.order_by('status')
-
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
 @login_required
 def dash_board_view(request):
     tasks = Task.objects.filter(user=request.user)
     tasks_completed = Task.objects.filter(user=request.user, status='C')
-    tasks_in_process = Task.objects.filter(user=request.user, status='O')
-    tasks_pending = Task.objects.filter(user=request.user, status='P')
-    return render(request,'tasks/dashboard.html', {'user':request.user, 'tasks_completed':tasks_completed, 'tasks_in_process':tasks_in_process, 'tasks_pending':tasks_pending})
+    tasks_process = Task.objects.filter(user=request.user, status='O')
+    tasks_pending = Task.objects.filter(user=request.user, status='P' )
+    return render(request,'tasks/dashboard.html', {'user':request.user, 'tasks_completed':tasks_completed, 'tasks_process':tasks_process, 'tasks_pending':tasks_pending})
 
 
 
@@ -71,7 +69,7 @@ def task_update(request, pk):
             messages.success(request, 'Task updated successfully!')
             return redirect('task-list')
     else:
-        form = TaskForm(instance=task, user=request.user)
+        form = TaskForm(instance=task, user=request.user) 
     return render(request, 'tasks/task_form.html', {'form': form})
 
 @login_required
@@ -80,10 +78,17 @@ def task_status_update(request,pk):
     if request.method =='POST':
         new_status = request.POST.get('status')
         task.status = new_status
-        task.save()
-    
+        task.save() 
+    return redirect('dashboard')
+    # return JsonResponse({'success': True})
+@login_required
+def task_status_update_list(request,pk):
+    task = get_object_or_404(Task, pk=pk)
+    if request.method =='POST':
+        new_status = request.POST.get('status')
+        task.status = new_status
+        task.save() 
     return redirect('task-list')
-
 
 
 @login_required
@@ -188,20 +193,20 @@ def task_list_search(request):
     }
     return render(request, 'tasks/task_list_search.html', context)
 
-@login_required
-def task_list_instance_search(request):
-    if request.is_ajax():
-        query = request.GET.get('q', '')
-        tasks = Task.objects.filter(title__icontains=query)
-        results = []
+# @login_required
+# def task_list_instance_search(request):
+#     if request.is_ajax():
+#         query = request.GET.get('q', '')
+#         tasks = Task.objects.filter(title__icontains=query)
+#         results = []
 
-        # Prepare the results in a format that JavaScript can understand (usually a list of dicts)
-        for task in tasks:
-            results.append({
-                'title': task.title,
-                'description': task.description,
-            })
-        return JsonResponse({'results': results})
-    task_list_search(request)
+#         # Prepare the results in a format that JavaScript can understand (usually a list of dicts)
+#         for task in tasks:
+#             results.append({
+#                 'title': task.title,
+#                 'description': task.description,
+#             })
+#         return JsonResponse({'results': results})
+#     task_list_search(request)
     # If the request is not AJAX, render the search page normally
    

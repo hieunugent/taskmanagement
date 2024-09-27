@@ -28,17 +28,17 @@
         }
     </style>
 </head>
-<body>
-    <h1>Task Calendar for {{ month }} {{ year }} by {{user_name}}</h1>
-    <div class="btn-group d-grid d-md-flex gap-2 col-2"> 
+<body >
+    <h2 class="alert alert-warning"> {{ month }} {{ year }}</h2>
+    <div class="btn-group d-grid d-md-flex col-2 mb-1"> 
         <a class="btn btn-outline-secondary" href="{% url 'mycalendar' prev_year prev_month %}">Prev</a>
         <a class="btn btn-outline-secondary" href="{% url 'mycalendar' next_year next_month %}">Next</a>
        
     </div>
-    <div class="calendar">
+    <div class="calendar ">
         <!-- Day headers -->
         {% for day_name in day_names %}
-            <div class="day-header">{{ day_name }}</div> 
+            <div class="day-header alert alert-info ">{{ day_name }}</div> 
         {% endfor %}
         
         <!-- Calendar weeks -->
