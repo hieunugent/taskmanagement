@@ -3,6 +3,7 @@
 {% include "search_base.html"%}
 <div class="">
     <h1 class="text-left mb-5 ">Task Dashboard</h1>
+    {% include 'chart.html' %}
     <div class="">
         <!-- Completed Tasks -->
        {% include "dashboard_template.html" with tasks_template=tasks_completed tasks_name="Tasks Completed" badge_class="badge-success"%}

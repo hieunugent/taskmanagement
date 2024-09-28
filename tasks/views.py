@@ -12,6 +12,7 @@ from datetime import date, timedelta
 from django.db.models import Q
 from django.http import JsonResponse
 # Create your views here.
+# Task list view
 @login_required
 def task_list(request):
     tasks = Task.objects.filter(user=request.user)
@@ -32,15 +33,22 @@ def task_list(request):
         tasks = tasks.order_by('status')
     return render(request,'tasks/task_list.html', {'tasks': tasks, 'user':request.user})
 @login_required
-def dash_board_view(request):
-    tasks = Task.objects.filter(user=request.user)
-    tasks_completed = Task.objects.filter(user=request.user, status='C')
-    tasks_process = Task.objects.filter(user=request.user, status='O')
-    tasks_pending = Task.objects.filter(user=request.user, status='P' )
-    return render(request,'tasks/dashboard.html', {'user':request.user, 'tasks_completed':tasks_completed, 'tasks_process':tasks_process, 'tasks_pending':tasks_pending})
+def task_list_search(request):
+    query = request.GET.get('q')  # Get the search query from the GET request
+    if query:
+          tasks = Task.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query) | Q(assignee__username__icontains=query)
+        ).order_by('due_date') # Search by task name (case insensitive)
+    else:
+        tasks = Task.objects.all() 
+        print(tasks) # If no search query, return all tasks
+    context={
+        'tasks': tasks,
+        'query': query
+    }
+    return render(request, 'tasks/task_list.html', context)
 
-
-
+# Task CRUD
 @login_required
 def task_create(request):
     # user = request.user
@@ -81,6 +89,7 @@ def task_status_update(request,pk):
         task.save() 
     return redirect('dashboard')
     # return JsonResponse({'success': True})
+
 @login_required
 def task_status_update_list(request,pk):
     task = get_object_or_404(Task, pk=pk)
@@ -90,17 +99,14 @@ def task_status_update_list(request,pk):
         task.save() 
     return redirect('task-list')
 
-
 @login_required
 def task_delete(request, pk):
-    """View to delete an existing task."""
     task = get_object_or_404(Task, pk=pk, user=request.user)
     if request.method == 'POST':
         task.delete()
         messages.success(request, 'Task deleted successfully!')
         return redirect('task-list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
-# views.py
 
 @login_required
 def task_list_view(request):
@@ -176,37 +182,68 @@ def calendar_view(request, year=None, month=None):
     }
     return render(request, 'calendarview/calendar.html', context)
 
-
+# Dash board View
 @login_required
-def task_list_search(request):
-    query = request.GET.get('q')  # Get the search query from the GET request
-    if query:
-          tasks = Task.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query) | Q(assignee__username__icontains=query)
-        ).order_by('due_date') # Search by task name (case insensitive)
-    else:
-        tasks = Task.objects.all() 
-        print(tasks) # If no search query, return all tasks
-    context={
-        'tasks': tasks,
-        'query': query
-    }
-    return render(request, 'tasks/task_list_search.html', context)
+def dash_board_view(request):
+     tasks = Task.objects.filter(user=request.user)
+     tasks_completed = Task.objects.filter(user=request.user, status='C')
+     tasks_process = Task.objects.filter(user=request.user, status='O')
+     tasks_pending = Task.objects.filter(user=request.user, status='P' )
+     Numbers_tasks = Task.objects.filter(user=request.user).count()
+     Numbers_tasks_completed = Task.objects.filter(user=request.user, status='C').count()
+     Numbers_tasks_process = Task.objects.filter(user=request.user, status='O').count()
+     Numbers_tasks_pending = Task.objects.filter(user=request.user, status='P' ).count()
+     Percentage_completed=0
+     Percentage_pending =0
+     if Numbers_tasks>0:
+            Percentage_completed = (Numbers_tasks_completed/Numbers_tasks)*100
+            Percentage_pending = (Percentage_pending/Numbers_tasks)*100
+     else:
+            Percentage_completed =0
+            Percentage_pending =0
+     context={
+        'Numbers_tasks':Numbers_tasks,
+        'Numbers_tasks_completed':Numbers_tasks_completed,
+        'Numbers_tasks_process':Numbers_tasks_process,
+        'Numbers_tasks_pending':Numbers_tasks_pending,
+        'Percentage_completed':Percentage_completed,
+        'Percentage_pending':Percentage_pending,
+        'user':request.user, 
+        'tasks_completed':tasks_completed, 
+        'tasks_process':tasks_process, 
+        'tasks_pending':tasks_pending}
 
-# @login_required
-# def task_list_instance_search(request):
-#     if request.is_ajax():
-#         query = request.GET.get('q', '')
-#         tasks = Task.objects.filter(title__icontains=query)
-#         results = []
+    
+     return render(request,'tasks/dashboard.html', context)
 
-#         # Prepare the results in a format that JavaScript can understand (usually a list of dicts)
-#         for task in tasks:
-#             results.append({
-#                 'title': task.title,
-#                 'description': task.description,
-#             })
-#         return JsonResponse({'results': results})
-#     task_list_search(request)
-    # If the request is not AJAX, render the search page normally
-   
+
+
+
+    
+
+# Chart view
+@login_required
+def count_tasks(request):
+     Numbers_tasks = Task.objects.filter(user=request.user).count()
+     Numbers_tasks_completed = Task.objects.filter(user=request.user, status='C').count()
+     Numbers_tasks_process = Task.objects.filter(user=request.user, status='O').count()
+     Numbers_tasks_pending = Task.objects.filter(user=request.user, status='P' ).count()
+     if Numbers_tasks>0:
+            Percentage_completed = (Numbers_tasks_completed/Numbers_tasks)*100
+            Percentage_pending = (Percentage_pending/Numbers_tasks)*100
+     else:
+            Percentage_completed =0
+            Percentage_pending =0
+     context={
+        'Numbers_tasks':Numbers_tasks,
+        'Numbers_tasks_completed':Numbers_tasks_completed,
+        'Numbers_tasks_process':Numbers_tasks_process,
+        'Numbers_tasks_pending':Numbers_tasks_pending,
+        'Percentage_completed':Percentage_completed,
+        'Percentage_pending':Percentage_pending,
+     }
+     return context
+
+
+
+
