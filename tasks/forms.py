@@ -3,6 +3,7 @@ from django import forms
 from .models import Task
 from django.contrib.auth.models import User
 
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -17,3 +18,10 @@ class TaskForm(forms.ModelForm):
             self.fields['assignee'].queryset=User.objects.all()
         else:
             self.fields['assignee'].queryset=User.objects.filter(id= user.id)
+class ChartTypeForm(forms.Form):
+    CHART_CHOICES = [
+        ('bar', 'Bar Chart'),
+        ('line', 'Line Chart'),
+        ('pie', 'Pie Chart'),
+    ]
+    chart_type = forms.ChoiceField(choices=CHART_CHOICES, label="Select Chart Type")

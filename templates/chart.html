@@ -1,26 +1,33 @@
 <body> 
 <div class="container mt-4">
-    <div class="row ">
-    <div class="col-md-6 ">   
-    <canvas id="taskChart1" width="400" height="200"></canvas>
-    </div>
-    <div class="col-md-4 ">
-    <canvas id="taskChart2" width="400" height="200"></canvas>
-    </div>
+    <div class="row mb-2">
+           <form action="" method="GET">
+              <select class="custom-select"  name="chart_type" id="chart_type" onchange="this.form.submit()" >
+              <option value="">Select chart type</option>
+              <option value="bar" {% if request.GET.chart_type == "bar" %}selected{% endif %}> Bar Chart</option>
+              <option value="pie" {% if request.GET.chart_type == "pie" %}selected{% endif %}> Pie Chart</option>   
+                 
+            </select>
+           </form>
+        <div class="col-md-6 mx-auto">   
+        <canvas id="taskChart" width="400" height="400"></canvas>
+        </div>
     </div>
 
     <script>
+        
         // Get data from Django context (passed in by the view)
-        const completedTasks =  {{Numbers_tasks_process}};
-        const inProcessTasks = {{Numbers_tasks_process}} ;
-        const pendingTasks =  {{Numbers_tasks_pending}} ;
-
+        const completedTasks =  "{{Numbers_tasks_process}}";
+        const inProcessTasks = "{{Numbers_tasks_process}}" ;
+        const pendingTasks =  "{{Numbers_tasks_pending}}" ;
+       
         // Create the chart
-        var ctx1= document.getElementById('taskChart1').getContext('2d');
-        var ctx2= document.getElementById('taskChart2').getContext('2d');
-
+        var ctx1= document.getElementById('taskChart').getContext('2d');
+     
+        var chartType = "{{ chart_type }}";
+        
         var taskChart1 = new Chart(ctx1, {
-            type: 'bar',  // You can change 'bar' to 'pie', 'line', etc.
+            type: chartType,  
             data: {
                 labels: ['Completed', 'In Process', 'Pending'],  // Task statuses
                 datasets: [{
@@ -43,31 +50,19 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    },
+                    x:{
+                        display:true
+                    }
+                },
+                plugins:{
+                    legend:{
+                        display:false
                     }
                 }
             }
         });
-        var taskChart2 = new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['Completed', 'In Process', 'Pending'],
-                datasets: [{
-                    label: 'Number of Tasks',
-                    data: [completedTasks, inProcessTasks, pendingTasks],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',  // Completed: Light green
-                        'rgba(255, 206, 86, 0.2)',  // In Process: Yellow
-                        'rgba(255, 99, 132, 0.2)'   // Pending: Red
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
+        
     </script>
     <!-- Percentage of completed tasks -->
     <div class="alert alert-info text-center">

@@ -11,6 +11,7 @@ from .forms import TaskForm
 from datetime import date, timedelta
 from django.db.models import Q
 from django.http import JsonResponse
+from .forms import ChartTypeForm
 # Create your views here.
 # Task list view
 @login_required
@@ -185,6 +186,12 @@ def calendar_view(request, year=None, month=None):
 # Dash board View
 @login_required
 def dash_board_view(request):
+     form = ChartTypeForm(request.POST or None)
+     chart_type = request.GET.get('chart_type')  # Default chart type
+     
+     if form.is_valid():
+        chart_type = form.cleaned_data['chart_type']
+
      tasks = Task.objects.filter(user=request.user)
      tasks_completed = Task.objects.filter(user=request.user, status='C')
      tasks_process = Task.objects.filter(user=request.user, status='O')
@@ -201,6 +208,7 @@ def dash_board_view(request):
      else:
             Percentage_completed =0
             Percentage_pending =0
+     
      context={
         'Numbers_tasks':Numbers_tasks,
         'Numbers_tasks_completed':Numbers_tasks_completed,
@@ -209,10 +217,12 @@ def dash_board_view(request):
         'Percentage_completed':Percentage_completed,
         'Percentage_pending':Percentage_pending,
         'user':request.user, 
-        'tasks_completed':tasks_completed, 
+        'tasks_completed':tasks_completed,  
         'tasks_process':tasks_process, 
-        'tasks_pending':tasks_pending}
-
+        'tasks_pending':tasks_pending,
+        'form': form, 'chart_type': chart_type
+        }
+        
     
      return render(request,'tasks/dashboard.html', context)
 
