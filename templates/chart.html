@@ -1,18 +1,18 @@
 <body> 
-<div class="container mt-4">
-    <div class="row mb-2">
-           <form action="" method="GET">
-              <select class="custom-select"  name="chart_type" id="chart_type" onchange="this.form.submit()" >
-              <option value="">Select chart type</option>
-              <option value="bar" {% if request.GET.chart_type == "bar" %}selected{% endif %}> Bar Chart</option>
-              <option value="pie" {% if request.GET.chart_type == "pie" %}selected{% endif %}> Pie Chart</option>   
-                 
-            </select>
-           </form>
-        <div class="col-md-6 mx-auto">   
-        <canvas id="taskChart" width="400" height="400"></canvas>
+<div class="col d-flex">
+          <div class="mb-2 order-form">
+            <form action="" method="GET">
+              <select class="custom-select  "  name="chart_type" id="chart_type" onchange="this.form.submit()" >
+                <option value="">Select chart type</option>
+                <option value="bar" {% if request.GET.chart_type == "bar" %}selected{% endif %}> Bar Chart</option>
+                <option value="pie" {% if request.GET.chart_type == "pie" %}selected{% endif %}> Pie Chart</option>   
+              </select>
+            </form>
+          </div>
+         <div class="  col-md-6  mx-auto"  {% if not request.GET.chart_type %} hidden {% endif %}>   
+                 <canvas id="taskChart" width="400" height="400"></canvas>
         </div>
-    </div>
+</div>
 
     <script>
         
@@ -65,12 +65,12 @@
         
     </script>
     <!-- Percentage of completed tasks -->
-    <div class="alert alert-info text-center">
-        <strong>{{ Percentage_completed|floatformat:2 }}%</strong> of tasks completed.
+    <div class="float-right badge badge-success badge-pill  text-center">
+        <h4>  <strong>{{ Percentage_completed|floatformat:2 }}%</strong> of tasks completed.</h4>
     </div>
 
     <!-- Task lists by status -->
-    <div class="row ">
+    <div class="row" hidden>
         <!-- Completed Tasks -->
         <div class="col-md-4">
             <h3>Completed Tasks ({{ Numbers_tasks_completed }})</h3>

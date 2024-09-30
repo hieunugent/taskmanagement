@@ -12,6 +12,7 @@ from datetime import date, timedelta
 from django.db.models import Q
 from django.http import JsonResponse
 from .forms import ChartTypeForm
+
 # Create your views here.
 # Task list view
 @login_required
@@ -222,15 +223,10 @@ def dash_board_view(request):
         'tasks_pending':tasks_pending,
         'form': form, 'chart_type': chart_type
         }
-        
+
     
      return render(request,'tasks/dashboard.html', context)
-
-
-
-
-    
-
+  
 # Chart view
 @login_required
 def count_tasks(request):
