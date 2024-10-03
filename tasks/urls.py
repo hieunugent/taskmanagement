@@ -20,4 +20,5 @@ urlpatterns = [
     path('mycalendar',views.calendar_view, name='mycalendar'),
     path('mycalendar/<int:year>/<int:month>/',views.calendar_view, name="mycalendar"),
     path('dashboard', views.dash_board_view, name='dashboard'),
+    
 ]

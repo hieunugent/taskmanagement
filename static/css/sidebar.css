@@ -1,0 +1,47 @@
+.sidebar {
+    width: 250px;
+    background-color: transparent;
+    padding: 20px;
+    float: left; /* Float the sidebar to the left */
+    height: auto; /* Make sure it spans the entire viewport height */
+}
+
+.sidebar h2 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color: grey;
+    padding: 10px;
+    border-radius:5px;
+}
+.sidebar.active {
+  width: 0;
+  transition: width 0.3s;
+}
+
+.content {
+  transition: margin-left 0.3s;
+}
+
+.sidebar.active + .content {
+  margin-left: 0;
+ 
+}
