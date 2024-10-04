@@ -45,3 +45,54 @@
   margin-left: 0;
  
 }
+
+/* tooltip */
+.nav-btn {
+    position: relative; /* For tooltip positioning */
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+
+.tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    top:  40px; /* Position above the button */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.toggle-btn:hover{
+    background-color: rgb(188, 195, 200);
+}
+/* Show the tooltip when hovering over the button */
+.nav-btn:hover .tooltip  {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; /* Position at the bottom of the tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent; /* Arrow color */
+}

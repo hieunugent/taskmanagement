@@ -54,16 +54,25 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'dashboard'%}"> <span class="material-icons">
-                dashboard
-                </span> Dash Board</a>
+            <li class="nav-item"> 
+                <button class="nav-btn " id="dashboard-btn">
+                    <a class="nav-link" href="{% url 'dashboard'%}">
+                        <span class="material-icons">dashboard </span>
+                        <span class="tooltip" id="tooltipText">Dashboard</span>
+                    </a>
+                </button>
+                
+             
             </li>
             {% if user.is_superuser%} {% csrf_token%}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'supervisor' %}"
-                ><span class="material-icons"> supervisor_account </span>
-                Supervisor</a>
+                <button class="nav-btn">
+                    <a class="nav-link" href="{% url 'supervisor' %}">
+                        <span class="material-icons"> supervisor_account </span>
+                        <span class="tooltip" id="tooltipText">Supervisor</span>
+                        </a>
+                </button>
+              
             </li>
             {% endif%} {% else %}
             <li class="nav-item">
@@ -77,11 +86,12 @@
         </div>
       </div>
     </nav>
-
-    <button class="btn btn-outline-secondary" id="toggleBtn" onclick="toggleSidebar()"> 
+    {% if user.is_authenticated %} {% csrf_token %}
+    <button class=" btn toggle-btn" id="toggleBtn" onclick="toggleSidebar()"> 
         <span class="material-icons" id="toggleIcon">chevron_left</span>
     </button>
     </button>
+   
     <div class="sidebar" id="sidebar">
       <ul>
         <li>
@@ -108,6 +118,7 @@
         </li>
       </ul>
     </div>
+    {%endif %}
     <!-- Main Content Block -->
     <div class="container mt-4">
       {% block content %}
