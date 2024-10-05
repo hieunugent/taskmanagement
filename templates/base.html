@@ -33,7 +33,10 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'task-list' %}"></a>
+        <a class="navbar-brand" href=""> 
+          <span class="material-icons"> account_circle </span>
+          <span> {{user}}</span>
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -88,8 +91,7 @@
     </nav>
     {% if user.is_authenticated %} {% csrf_token %}
     <button class=" btn toggle-btn" id="toggleBtn" onclick="toggleSidebar()"> 
-        <span class="material-icons" id="toggleIcon">chevron_left</span>
-    </button>
+        <span class="material-icons" id="toggleIcon"> chevron_left </span>
     </button>
    
     <div class="sidebar" id="sidebar">
@@ -105,7 +107,7 @@
           >
         </li>
         <li>
-          <a href="#"> <span class="material-icons">task</span> Tasks</a>
+          <a href="{% url 'task-list' %}"> <span class="material-icons">task</span> Tasks</a>
         </li>
         <li>
           <a href="#"> <span class="material-icons">folder</span> Projects</a>

@@ -4,12 +4,10 @@ function toggleSidebar() {
     sidebar.classList.toggle("active");   
         // Toggle visibility of both sidebar and content
     if (sidebar.style.display === "none") {
-            sidebar.style.display = "block";
-          
-            toggleIcon.innerText = "chevron_left"; // Change button text
+            sidebar.style.display = "block";   
+            toggleBtn.innerText = "chevron_left"; // Change button text
      } else {
             sidebar.style.display = "none";
-            
-            toggleIcon.innerText = "menu"; // Change button text
+            toggleBtn.innerText = "chevron_right"; // Change button text
         }
   }

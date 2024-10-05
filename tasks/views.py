@@ -122,7 +122,7 @@ def task_list_view(request):
     context = {
         'tasks': tasks,
     }
-    return render(request, 'tasks/all_task_list.html', context)
+    return render(request, 'tasks/task_list.html', context)
 
 @login_required
 def calendar_view(request, year=None, month=None):
