@@ -3,7 +3,7 @@
 
     "builds": [
       {
-        "src": "taskmanagement/wsgi.py",
+        "src": "api/index.py",
         "use": "@vercel/python",
         "config": {
           "pythonVersion": "3.9"
@@ -12,7 +12,7 @@
     ],
     "routes":[
         {"src":"/(.*)",
-        "dest":"taskmanagement/wsgi.py"}
+        "dest":"api/index.py"}
     ]
   }
   
