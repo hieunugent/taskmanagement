@@ -23,13 +23,7 @@
                   <form method="POST" action="{% url 'task-status-update' task.id %}">
                     {% csrf_token %}
                       <select class="" name="status" onchange="this.form.submit()">  
-                      <!-- {%if task.status == 'C' %}
-                      <option  value="completed" {% if task.status == 'completed' %}selected{% endif %}><span class="bg-success text-dark ">Completed</span></option>   
-                      {%elif task.status == 'O' %}
-                      <option  value="progress" {% if task.status == 'progress' %}selected{% endif %}><span class="bg-info text-dark">In Process</span> </option>
-                      {% elif task.status == 'P'%}
-                      <option  value="pending" {% if task.status == 'pending' %}selected{% endif %}><span class="bg-warning text-dark">Pending</span></option>
-                      {% endif%} -->
+                 
                         <option class="bg-success text-dark" value="C" {% if task.status == 'C' %}selected{% endif %}>Completed</option>   
                         <option class="bg-info text-dark" value="O" {% if task.status == 'O' %}selected{% endif %}>In Progress</option>
                         <option class="bg-warning text-dark" value="P" {% if task.status == 'P' %}selected{% endif %}>Pending</option>
@@ -38,7 +32,6 @@
                 </form>
                 </td> 
               <td class="text-nowrap">{{task.due_date}}</td>
-      
                  <td>
                   <div class="d-flex gap-1">
                     <a href="{% url 'task-update' task.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
