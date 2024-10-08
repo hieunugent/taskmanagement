@@ -4,7 +4,7 @@
     "builds": [
       {
         "src": "api/index.py",
-        "use": "@vercel/python",
+        "use": "@vercel/python3",
         "config": {
           "pythonVersion": "3.9.12"
         }
