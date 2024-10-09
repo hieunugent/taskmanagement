@@ -17,6 +17,8 @@ venv.bak/
 db.sqlite3
 media/
 staticfiles/
+# Ignore the greenlet folder
+/greenlet/
 
 # If you are using Django with Docker
 *.docker
@@ -84,4 +86,3 @@ staticfiles/
 *.env
 
 celerybeat-schedule
-
