@@ -86,3 +86,5 @@ staticfiles/
 celerybeat-schedule
 
 .vercel
+
+/greenlet/
