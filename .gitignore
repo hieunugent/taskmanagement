@@ -85,3 +85,4 @@ staticfiles/
 
 celerybeat-schedule
 
+/greenlet/
