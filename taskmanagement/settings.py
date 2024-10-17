@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'taskmanagement.wsgi.application'
 # WSGI_APPLICATION = 'api.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+# enable this when local
 
 DATABASES = {
     'default': {
@@ -89,6 +90,20 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# enable it when hosting online
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME') ,
+#         'USER': os.getenv('DB_USER') ,
+#         'PASSWORD': os.getenv('DB_PASSWORD') ,
+#         'HOST': os.getenv('DB_HOST') ,
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
+
+# settings.py
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Password validation
