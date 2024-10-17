@@ -25,31 +25,36 @@ Virtualenv (optional but recommended)
 Steps
 Clone the Repository
 
-bash
-Copy code
+```bash
+                                                Copy code
 git clone https://github.com/hieunugent/taskmanagement.git
 cd taskmanagement
+```
 Create a Virtual Environment (Optional but Recommended)
 
-bash
+```bash
 Copy code
 python -m venv env  
+```
 source env/bin/activate  # On Windows, use: env\Scripts\activate
 Install Dependencies
 
-bash
+```bash
 Copy code
 pip install -r requirements.txt
+```
 Apply Migrations
 
-bash
+```bash
 Copy code
 python manage.py migrate
+```
 Run the Server
 
-bash
+```bash
 Copy code
 python manage.py runserver
+```
 Open your browser and navigate to:
 http://127.0.0.1:8000
 
