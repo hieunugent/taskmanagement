@@ -26,33 +26,33 @@ Steps
 Clone the Repository
 
 ```bash
-                                                Copy code
+                                                
 git clone https://github.com/hieunugent/taskmanagement.git
 cd taskmanagement
 ```
 Create a Virtual Environment (Optional but Recommended)
 
 ```bash
-Copy code
+
 python -m venv env  
 ```
 source env/bin/activate  # On Windows, use: env\Scripts\activate
 Install Dependencies
 
 ```bash
-Copy code
+
 pip install -r requirements.txt
 ```
 Apply Migrations
 
 ```bash
-Copy code
+
 python manage.py migrate
 ```
 Run the Server
 
 ```bash
-Copy code
+
 python manage.py runserver
 ```
 Open your browser and navigate to:
@@ -75,7 +75,7 @@ Update DATABASES in settings.py for production (e.g., PostgreSQL or MySQL).
 To run tests:
 
 ```bash
-Copy code
+
 python manage.py test
 ```
 📦 Deployment
@@ -83,7 +83,7 @@ For deploying to production, follow these steps:
 
 Collect Static Files:
 ```bash
-Copy code
+
 python manage.py collectstatic
 ```
 
