@@ -57,11 +57,12 @@ http://127.0.0.1:8000
 Environment Variables:
 Create a .env file to store secrets like SECRET_KEY, DEBUG, and database credentials:
 
-bash
+```bash
 Copy code
 SECRET_KEY='your-secret-key'
 DEBUG=True
 DATABASE_URL=postgres://user:password@localhost:5432/your-db
+```
 Database Setup:
 Update DATABASES in settings.py for production (e.g., PostgreSQL or MySQL).
 
@@ -71,7 +72,7 @@ To run tests:
 ```bash
 Copy code
 python manage.py test
-
+```
 📦 Deployment
 For deploying to production, follow these steps:
 
@@ -79,7 +80,7 @@ Collect Static Files:
 ```bash
 Copy code
 python manage.py collectstatic
-
+```
 
 Update Allowed Hosts: Add your domain to the ALLOWED_HOSTS in settings.py.
 Deploy to Your Platform: You can deploy to AWS, Heroku, or any preferred server.
