@@ -68,7 +68,7 @@ Update DATABASES in settings.py for production (e.g., PostgreSQL or MySQL).
 🧪 Running Tests
 To run tests:
 
-bash
+#!/bin/bash
 Copy code
 python manage.py test
 📦 Deployment
