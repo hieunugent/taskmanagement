@@ -68,16 +68,19 @@ Update DATABASES in settings.py for production (e.g., PostgreSQL or MySQL).
 🧪 Running Tests
 To run tests:
 
-#!/bin/bash
+```bash
 Copy code
 python manage.py test
+
 📦 Deployment
 For deploying to production, follow these steps:
 
 Collect Static Files:
-bash
+```bash
 Copy code
 python manage.py collectstatic
+
+
 Update Allowed Hosts: Add your domain to the ALLOWED_HOSTS in settings.py.
 Deploy to Your Platform: You can deploy to AWS, Heroku, or any preferred server.
 👥 Contributing
